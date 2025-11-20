@@ -4,6 +4,10 @@ pipeline {
         jdk 'jdk17'
         maven 'maven'
     }
+    environment {
+    SONAR_AUTH_TOKEN = credentials('sonar-token')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -26,6 +30,19 @@ pipeline {
                 }
             }
         }
+         stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('sonar') {
+            sh """
+                mvn clean verify sonar:sonar \
+                -Dsonar.projectKey=mi-proyecto \
+                -Dsonar.projectName=mi-proyecto \
+                -Dsonar.host.url=http://localhost:9000 \
+                -Dsonar.login=${env.SONAR_AUTH_TOKEN}
+            """
+        }
+    }
+}
     }
 
     post {
@@ -36,4 +53,5 @@ pipeline {
             echo 'El build falló.'
         }
     }
+   
 }
