@@ -31,18 +31,21 @@ pipeline {
             }
         }
          stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('sonar') {
-            sh """
-                mvn clean verify sonar:sonar \
-                -Dsonar.projectKey=mi-proyecto \
-                -Dsonar.projectName=mi-proyecto \
-                -Dsonar.host.url=http://localhost:9000 \
-                -Dsonar.login=${env.SONAR_AUTH_TOKEN}
-            """
+            steps {
+                dir('complete') { 
+                    withSonarQubeEnv('sonar') {
+                        sh """
+                            mvn clean verify sonar:sonar \
+                            -Dsonar.projectKey=mi-proyecto \
+                            -Dsonar.projectName=mi-proyecto \
+                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.login=${env.SONAR_AUTH_TOKEN}
+                        """
+                    }
+                }
+                
+            }
         }
-    }
-}
     }
 
     post {
