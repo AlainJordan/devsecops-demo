@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'TU_REPO_AQUI'
+                git branch: 'main', url: 'https://github.com/AlainJordan/devsecops-demo.git'
             }
         }
         
