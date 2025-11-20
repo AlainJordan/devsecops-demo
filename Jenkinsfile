@@ -13,7 +13,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn -B clean package'
+                dir('complete') {
+                    sh 'mvn -B clean package'
+                }
             }
         }
 
