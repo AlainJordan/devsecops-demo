@@ -61,6 +61,11 @@ pipeline {
             post {
                 always {
                     dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                    publishHTML(target: [
+                        reportDir: 'complete',
+                        reportFiles: 'dependency-check-report.html',
+                        reportName: 'Dependency Check Report'
+                    ])
                 }
             }
         }
