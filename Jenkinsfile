@@ -59,12 +59,14 @@ pipeline {
                 }
             }
             post {
-                always {
-                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-                    publishHTML(target: [
+                 always {
+                    dependencyCheckPublisher pattern: 'complete/dependency-check-report.xml'
+            
+                    publishHTML([
                         reportDir: 'complete',
                         reportFiles: 'dependency-check-report.html',
-                        reportName: 'Dependency Check Report'
+                        reportName: 'OWASP Dependency Check Report',
+                        allowMissing: true
                     ])
                 }
             }
