@@ -46,13 +46,14 @@ pipeline {
         }
 
 
-        stage('Dependency Check') {
+       stage('Dependency Check') {
             steps {
                 dir('complete') {
                     dependencyCheck additionalArguments: '''
                         --format XML \
                         --format HTML \
-                        --scan .
+                        --scan . \
+                        --failOnCVSS 7
                     ''',
                     odcInstallation: 'dependency-check'
                 }
@@ -63,6 +64,7 @@ pipeline {
                 }
             }
         }
+
         
                 
     }
