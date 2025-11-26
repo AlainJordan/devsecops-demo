@@ -44,13 +44,27 @@ pipeline {
                 
             }
         }
-        stage('Quality Gate') {
+
+
+        stage('Dependency Check') {
             steps {
-                timeout(time: 15, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
+                dir('complete') {
+                    dependencyCheck additionalArguments: '''
+                        --format XML \
+                        --format HTML \
+                        --scan .
+                    ''',
+                    odcInstallation: 'dependency-check'
+                }
+            }
+            post {
+                always {
+                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
                 }
             }
         }
+        
+                
     }
 
     post {
