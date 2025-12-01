@@ -65,7 +65,10 @@ pipeline {
                     publishHTML([
                         reportDir: 'complete',
                         reportFiles: 'dependency-check-report.html',
-                        reportName: 'OWASP Dependency Check Report'
+                        reportName: 'OWASP Dependency Check Report',
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        allowMissing: true
                     ])
                 }
             }
