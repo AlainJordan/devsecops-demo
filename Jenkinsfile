@@ -74,6 +74,17 @@ pipeline {
             }
         }
 
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh '''
+                        docker build -t alainjordan07/devsecops-demo:latest .
+                    '''
+                }
+            }
+        }
+
         
                 
     }
